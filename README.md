@@ -45,11 +45,11 @@ We estimated that the median daily reproduction number (Rt) in Wuhan declined fr
 
 *Disease progression times* 	
 
-Type                          time
-----------------              --------
-Incubation period 	          5.2 days
-infectious period 	          2.9 days
-delay onset-to-confirmation 	6.1 days
+    Type                          time
+    -----------------             --------
+    Incubation period 	          5.2 days
+    infectious period 	          2.9 days
+    delay onset-to-confirmation 	6.1 days
 
 
 SEIR Model
