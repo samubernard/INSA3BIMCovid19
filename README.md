@@ -43,12 +43,14 @@ https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases
 ### R0 reproductive number estimates
 We estimated that the median daily reproduction number (Rt) in Wuhan declined from 2·35 (95% CI 1·15–4·77) 1 week before travel restrictions were introduced on Jan 23, 2020, to 1·05 (0·41–2·39) 1 week after. Kucharski et al 2020 The Lancet
 
-Infection times 	
+*Disease progression times* 	
+
 Type                          time
 ----------------              --------
 Incubation period 	          5.2 days
 infectious period 	          2.9 days
 delay onset-to-confirmation 	6.1 days
+
 
 SEIR Model
 https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SEIR_model
