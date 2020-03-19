@@ -1,5 +1,4 @@
 Province/State,Country/Region,Lat,Long,Date,Value
-#adm1+name,#country+name,#geo+lat,#geo+lon,#date,#affected+infected+value+num
 France,France,46.2276,2.2137,2020-03-18,9043
 France,France,46.2276,2.2137,2020-03-17,7652
 France,France,46.2276,2.2137,2020-03-16,6633
