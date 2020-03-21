@@ -1,7 +1,7 @@
 % Heat equations finite difference implicit Crank-Nicolson
 
 % parametre des equations
-D = 10; % coefficient de diffusion
+D = 6; % coefficient de diffusion
 
 % discretisation du Laplacien avec conditions aux bord de Neumann
 % no flux, i.e. du/dx = 0 en x0 et en x1
@@ -23,8 +23,11 @@ newu = zeros(J,1);
 
 
 
-% condition initiales
-u( (X(:) - 50).^2 + (Y(:) - 50).^2 < 3 ) = 1; % condition initiale constante par morceaux
+% Initial Conditions
+u( (X(:) - 50).^2 + (Y(:) - 50).^2 < 3 ) = 1; % piecewise constant initial condition
+u( (X(:) - 47).^2 + (Y(:) - 21).^2 < 3 ) = 1; % piecewise constant initial condition
+u( (X(:) - 63).^2 + (Y(:) - 73).^2 < 3 ) = 1; % piecewise constant initial condition
+u( (X(:) - 75).^2 + (Y(:) - 34).^2 < 3 ) = 1; % piecewise constant initial condition
 
 exterior = setdiff(1:J, union(border,interior));
 
@@ -38,22 +41,23 @@ t0 = 0;
 tfinal = 30; 
 t = t0;
 tp = t0;
-dt = 0.5 * h^2/2/D;
+dt = 0.1;
 
 nbr_t = ceil((tfinal-t0)/dt)+1;
 dtheta = linspace(-37.5,37.5,floor(nbr_t/2));
 dphi = linspace(-10,60,floor(nbr_t/2));
 zo = linspace(5,1,floor(nbr_t/2));
 dy = linspace(-3,0,floor(nbr_t/2));
-dtheta = [dtheta, repmat(37.5,1,nbr_t - floor(nbr_t/2))];
-dphi = [dphi, repmat(60,1,nbr_t - floor(nbr_t/2))];
-zo = [zo, repmat(1,1,nbr_t - floor(nbr_t/2))];
-dy = [dy, repmat(0,1,nbr_t - floor(nbr_t/2))];
+dtheta = fliplr([dtheta, repmat(37.5,1,nbr_t - floor(nbr_t/2))]);
+dphi = fliplr([dphi, repmat(60,1,nbr_t - floor(nbr_t/2))]);
+zo = fliplr([zo, repmat(1,1,nbr_t - floor(nbr_t/2))]);
+dy = fliplr([dy, repmat(0,1,nbr_t - floor(nbr_t/2))]);
 
 clearvars F;
 F(nbr_t) = struct('cdata',[],'colormap',[]);
 
 figure(1); clf;
+pos = get(gcf,'Position')
 surf(X,Y,reshape(u,J1,J2),'EdgeColor','none');
 axis([1, J1, 1, J2, 0, 10])
 shading interp
@@ -63,7 +67,7 @@ camzoom(zo(1))
 camdolly(0,dy(1),0)
 axis off
 drawnow;
-F(1) = getframe(gcf,[0,0,853,544]);
+F(1) = getframe(gcf,[0,0,pos(3:4)]);
 disp('appuyer sur une touche pour continuer');
 pause
 
@@ -120,7 +124,7 @@ while t < tfinal
     camzoom(zo(vi));
     camdolly(0,dy(vi),0);
     drawnow;
-    F(vi) = getframe(gcf,[0,0,853,544]);
+    F(vi) = getframe(gcf,[0,0,pos(3:4)]);
     t = t + dt;
     vi = vi + 1;
     fprintf("t = %.5f\n",t);
@@ -129,7 +133,7 @@ toc
 
 %%
 
-v = VideoWriter('epidemics.avi','MPEG-4');
+v = VideoWriter('epidemics','MPEG-4');
 v.Quality = 25;
 open(v);
 writeVideo(v,F);
