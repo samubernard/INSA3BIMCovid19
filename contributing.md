@@ -24,7 +24,7 @@ Multiple-author commits are possible by adding two empty lines ('>') and typing 
 
 Start reading our code and you'll get the hang of it. We optimize for readability:
 
-  * We indent using two spaces (soft tabs)
+  * We indent using four spaces (Matlab standard)
   * We always put spaces after list items and function parameters (`[1, 2, 3]`, not `[1,2,3]`), around operators (`x = 1`, not `x=1`), and around hash arrows.
   * This is open source software. Consider the people who will read your code, and make it look nice for them. It's sort of like driving a car: Perhaps you love doing donuts when you're alone, but with passengers the goal is to make the ride as smooth as possible.
 
