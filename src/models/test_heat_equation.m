@@ -1,33 +1,47 @@
 % Heat equations finite difference implicit Crank-Nicolson
+% Domain of integration: Metropolitan France (datasets/grid.mat)
+% Discretisation: laplacian/L2D.math
+%
+% du/dt = D (d^2 u/dx^2 + d^2 u/dx^2)
+%
+% With Neumann no flux boundary conditions
+% Initial conditions: 4 local peaks
 
-% parametre des equations
-D = 6; % coefficient de diffusion
 
-% discretisation du Laplacien avec conditions aux bord de Neumann
-% no flux, i.e. du/dx = 0 en x0 et en x1
+
+% Equation parameters 
+D = 400; % diffusion coefficient units: km^2/day (characteristic travel speed sigma = sqrt(2*D))
+
+% Spatial grid in grid.mat
+% Discretisation of the Laplacian in L2D.mat
 
 load ../datasets/grid.mat
 load ../laplacian/L2D.mat
 
-% parametres de simulation, espace
-% x in [x0,x1]
-h = 1; % not relevant at the moment
-x = 0:h:J2-1; % discretisation
-y = 0:h:J1-1; 
-[X,Y] = meshgrid(x,y);
-J  = J1*J2;  % nombre de points de discretisation
+% Simulation parameters 
+% The grid has J2 points (in x) by J1 points (in y)
+% The French map:
+% width: 874 px and 175 px = 200km -> 874 px = 998 km 
+% h = 998 km / (J1-1)
+% Space units: km 
+S  = 998.0;                 % space scale factor;
+h = S/(J1-1);               % grid square size
+x = h*(0:J2-1);             % space discretisation in x
+y = h*(0:J1-1);             % space discretisation in y
+[X,Y] = meshgrid(x,y);      % matrix version of (x,y) for plotting purpose
+J  = J1*J2;                 % grid size 
 
-% variable dynamiques
-u = zeros(J,1); % stocke seulement l'etat au temps t
-newu = zeros(J,1);
+% Dynamical variables 
+u = zeros(J,1); % u is the current state variable, do not keep memory of past times 
+newu = zeros(J,1); 
 
 
 
 % Initial Conditions
-u( (X(:) - 50).^2 + (Y(:) - 50).^2 < 3 ) = 1; % piecewise constant initial condition
-u( (X(:) - 47).^2 + (Y(:) - 21).^2 < 3 ) = 1; % piecewise constant initial condition
-u( (X(:) - 63).^2 + (Y(:) - 73).^2 < 3 ) = 1; % piecewise constant initial condition
-u( (X(:) - 75).^2 + (Y(:) - 34).^2 < 3 ) = 1; % piecewise constant initial condition
+u( (X(:) - 550).^2 + (Y(:) - 250).^2 < 300 ) = 1; % piecewise constant initial condition
+u( (X(:) - 850).^2 + (Y(:) - 270).^2 < 300 ) = 1; % piecewise constant initial condition
+u( (X(:) - 670).^2 + (Y(:) - 650).^2 < 300 ) = 1; % piecewise constant initial condition
+u( (X(:) - 330).^2 + (Y(:) - 700).^2 < 300 ) = 1; % piecewise constant initial condition
 
 exterior = setdiff(1:J, union(border,interior));
 
@@ -36,13 +50,14 @@ u(exterior) = nan;
 X(exterior) = nan;
 Y(exterior) = nan;
 
-% parametres de simulation, temps
+% time parameters
 t0 = 0;
 tfinal = 30; 
 t = t0;
 tp = t0;
 dt = 0.1;
 
+% camera zoom and orbit
 nbr_t = ceil((tfinal-t0)/dt)+1;
 dtheta = linspace(-37.5,37.5,floor(nbr_t/2));
 dphi = linspace(-10,60,floor(nbr_t/2));
@@ -53,13 +68,14 @@ dphi = fliplr([dphi, repmat(60,1,nbr_t - floor(nbr_t/2))]);
 zo = fliplr([zo, repmat(1,1,nbr_t - floor(nbr_t/2))]);
 dy = fliplr([dy, repmat(0,1,nbr_t - floor(nbr_t/2))]);
 
+% movie struct
 clearvars F;
 F(nbr_t) = struct('cdata',[],'colormap',[]);
 
 figure(1); clf;
 pos = get(gcf,'Position')
 surf(X,Y,reshape(u,J1,J2),'EdgeColor','none');
-axis([1, J1, 1, J2, 0, 10])
+axis([y(1), y(end), x(1), x(end), 0, 10])
 shading interp
 axis ij
 camorbit(dtheta(1),dphi(1))
@@ -68,13 +84,13 @@ camdolly(0,dy(1),0)
 axis off
 drawnow;
 F(1) = getframe(gcf,[0,0,pos(3:4)]);
-disp('appuyer sur une touche pour continuer');
+disp('press any key to continue');
 pause
 
-% Schema implicite Crank-Nicolson
+% Crank-Nicolson implicit scheme 
 A = (speye(J) - dt/h^2*D/2*L);
 
-% Neumann no flux conditions
+% Neumann no flux conditions: compute (approximate) boundary normal vector 
 normal = zeros(size(border));
 for i = 1:length(border)
     if any(interior == border(i)+1) % normal up ^
@@ -116,7 +132,7 @@ while t < tfinal
     u = newu;
 
     surf(X,Y,reshape(u,J1,J2),'EdgeColor','none');
-    axis([1, J1, 1, J2, 0, 10])
+    axis([y(1), y(end), x(1), x(end), 0, 10])
     shading interp
     axis ij
     axis off
