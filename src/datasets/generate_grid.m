@@ -1,6 +1,6 @@
 %% Generate 2D grid with metropolitan France border
 
-% import image as a 3D-array
+%% Import image as a 3D-array and acquire the border (RUN ONLY IF border.mat is not defined)
 A = imread('France_population_density.png');
 
 figure(1); clf;
@@ -11,7 +11,10 @@ axis equal; % make pixels square
 
 save border.mat x y
 
-% set grid size 
+%% Set grid size 
+
+load border.mat
+
 A = imread('France_population_density.png');
 [ay,ax,~] = size(A);
 
@@ -41,8 +44,9 @@ axis ij;
 axis equal;
 
 % Define the border
-xsint = interp(xs,100);
-ysint = interp(ys,100);
+xsint = interp1(xs,1:0.01:length(xs));
+ysint = interp1(ys,1:0.01:length(ys));
+
 border = ceil(ysint) + J1*ceil(xsint); % ceil: make sure the integers are >= 1
 border = unique(border);
 
@@ -51,7 +55,7 @@ G = sparse(J1,J2);
 G(border) = 1;
 spy(G);
 
-% define the interior: more tricky    
+%% Define the interior: more tricky    
 % we will use an iterative method, starting with a seed in the interior
 i0 = 50; j0 = 60; % a point in the interior
 interior = i0 + J1*j0;
