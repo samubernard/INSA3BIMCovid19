@@ -6,7 +6,7 @@
 head -1 time_series-ncov-Confirmed.csv  >confirmed_cases_metr_france.csv
 
 # extract lines from Metropolitan France (France,France)
-sed -n '/^\s*France\s*,\s*France/p' time_series-ncov-Confirmed.csv >>confirmed_cases_metr_france.csv
+sed -n '/^,\s*France\s*/p' time_series-ncov-Confirmed.csv >>confirmed_cases_metr_france.csv
 
 # ---------------
 # Death cases  
@@ -14,7 +14,7 @@ sed -n '/^\s*France\s*,\s*France/p' time_series-ncov-Confirmed.csv >>confirmed_c
 head -1 time_series-ncov-Deaths.csv  >death_cases_metr_france.csv
 
 # extract lines from Metropolitan France (France,France)
-sed -n '/^\s*France\s*,\s*France/p' time_series-ncov-Deaths.csv >>death_cases_metr_france.csv
+sed -n '/^,\s*France\s*/p' time_series-ncov-Deaths.csv >>death_cases_metr_france.csv
 
 # ---------------
 # Death cases  
@@ -22,5 +22,5 @@ sed -n '/^\s*France\s*,\s*France/p' time_series-ncov-Deaths.csv >>death_cases_me
 head -1 time_series-ncov-Recovered.csv  >recovered_cases_metr_france.csv
 
 # extract lines from Metropolitan France (France,France)
-sed -n '/^\s*France\s*,\s*France/p' time_series-ncov-Recovered.csv >>recovered_cases_metr_france.csv
+sed -n '/^,\s*France\s*/p' time_series-ncov-Recovered.csv >>recovered_cases_metr_france.csv
 
