@@ -7,8 +7,6 @@
 % With Neumann no flux boundary conditions
 % Initial conditions: 4 local peaks
 
-
-
 % Equation parameters 
 D = 400; % diffusion coefficient units: km^2/day (characteristic travel speed sigma = sqrt(2*D))
 
@@ -17,6 +15,7 @@ D = 400; % diffusion coefficient units: km^2/day (characteristic travel speed si
 
 load ../datasets/grid.mat
 load ../laplacian/L2D.mat
+load ../datasets/country.mat
 
 % Simulation parameters 
 % The grid has J2 points (in x) by J1 points (in y)
@@ -35,8 +34,6 @@ J  = J1*J2;                 % grid size
 u = zeros(J,1); % u is the current state variable, do not keep memory of past times 
 newu = zeros(J,1); 
 
-
-
 % Initial Conditions
 u( (X(:) - 550).^2 + (Y(:) - 250).^2 < 300 ) = 1; % piecewise constant initial condition
 u( (X(:) - 850).^2 + (Y(:) - 270).^2 < 300 ) = 1; % piecewise constant initial condition
@@ -54,7 +51,6 @@ Y(exterior) = nan;
 t0 = 0;
 tfinal = 30; 
 t = t0;
-tp = t0;
 dt = 0.1;
 
 % camera zoom and orbit
@@ -65,16 +61,20 @@ zo = linspace(5,1,floor(nbr_t/2));
 dy = linspace(-3,0,floor(nbr_t/2));
 dtheta = fliplr([dtheta, repmat(37.5,1,nbr_t - floor(nbr_t/2))]);
 dphi = fliplr([dphi, repmat(60,1,nbr_t - floor(nbr_t/2))]);
-zo = fliplr([zo, repmat(1,1,nbr_t - floor(nbr_t/2))]);
-dy = fliplr([dy, repmat(0,1,nbr_t - floor(nbr_t/2))]);
+zo = fliplr([zo, ones(1,nbr_t - floor(nbr_t/2))]);
+dy = fliplr([dy, zeros(1,nbr_t - floor(nbr_t/2))]);
 
 % movie struct
 clearvars F;
 F(nbr_t) = struct('cdata',[],'colormap',[]);
 
 figure(1); clf;
-pos = get(gcf,'Position')
-surf(X,Y,reshape(u,J1,J2),'EdgeColor','none');
+pos = get(gcf,'Position');
+u2 = reshape(u,J1,J2);
+u2(u2 < 0.01) = nan;
+surf(X,Y,u2,'EdgeColor','none');
+hold on
+image([y(1), y(end)],[x(1), x(end)], country);
 axis([y(1), y(end), x(1), x(end), 0, 10])
 shading interp
 axis ij
@@ -106,7 +106,6 @@ for i = 1:length(border)
     end
 end
 
-
 vi = 2;
 
 % BOUCLE PRINCIPALE
@@ -131,7 +130,12 @@ while t < tfinal
     
     u = newu;
 
-    surf(X,Y,reshape(u,J1,J2),'EdgeColor','none');
+    hold off
+    u2 = reshape(u,J1,J2);
+    u2(u2 < 0.01) = nan;
+    surf(X,Y,u2,'EdgeColor','none');
+    hold on
+    image([y(1), y(end)],[x(1), x(end)], country);
     axis([y(1), y(end), x(1), x(end), 0, 10])
     shading interp
     axis ij
@@ -147,7 +151,7 @@ while t < tfinal
 end
 toc
 
-%%
+%% Export simulation as video
 
 v = VideoWriter('epidemics','MPEG-4');
 v.Quality = 25;
