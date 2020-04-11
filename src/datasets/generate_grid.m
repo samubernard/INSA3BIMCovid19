@@ -47,7 +47,7 @@ axis equal;
 xsint = interp1(xs,1:0.01:length(xs));
 ysint = interp1(ys,1:0.01:length(ys));
 
-border = ceil(ysint) + J1*ceil(xsint); % ceil: make sure the integers are >= 1
+border = round(ysint) + J1*(round(xsint)-1); 
 border = unique(border);
 
 % Check that the border is completly closed:
@@ -147,7 +147,22 @@ imagesc(G)
 
 save grid.mat border interior J1 J2
 
+%% Resise the map to J1 x J2
 
+% French map
+A = imread('France_population_density.png');
+[ay,ax,~] = size(A);
+A = double(A)/255;
+[Xint,Yint]=meshgrid(1:J2,1:J1);
+countryr = interp2(A(:,:,1),(Xint-0.5)*ax/J2,(Yint-0.5)*ay/J1,'cubic');
+countryg = interp2(A(:,:,2),(Xint-0.5)*ax/J2,(Yint-0.5)*ay/J1,'cubic');
+countryb = interp2(A(:,:,3),(Xint-0.5)*ax/J2,(Yint-0.5)*ay/J1,'cubic');
+country = zeros(J1,J2,3);
+country(:,:,1) = countryr;
+country(:,:,2) = countryg;
+country(:,:,3) = countryb;
+
+save country.mat country
 
 
 
