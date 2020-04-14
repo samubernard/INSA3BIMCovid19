@@ -2,7 +2,7 @@
 % Domain of integration: Metropolitan France (datasets/grid.mat)
 % Discretisation: laplacian/L2D.math
 %
-% du/dt = D (d^2 u/dx^2 + d^2 u/dx^2)
+% du/dt = D (d^2 u/dx^2 + d^2 u/dy^2)
 %
 % With Neumann no flux boundary conditions
 % Initial conditions: 4 local peaks
