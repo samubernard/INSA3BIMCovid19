@@ -1,7 +1,6 @@
-% GROUPE ADI: Vincent et Milena
-% Heat equations finite difference implicit Crank-Nicolson
+% Heat equations finite difference using ADI
 % Domain of integration: Metropolitan France (datasets/grid.mat)
-% Discretisation: laplacian/L2D.math
+% Miléna Kaag & Vincent Le Goff
 %
 % du/dt = D (d^2 u/dx^2 + d^2 u/dy^2)
 %
@@ -12,10 +11,8 @@
 D = 400; % diffusion coefficient units: km^2/day (characteristic travel speed sigma = sqrt(2*D))
 
 % Spatial grid in grid.mat
-% Discretisation of the Laplacian in L2D.mat
 
 load ../datasets/grid.mat
-load ../laplacian/L2D.mat
 load ../datasets/country.mat
 
 % Simulation parameters 
@@ -32,13 +29,16 @@ y = h*(0:J1-1);             % space discretisation in y
 J  = J1*J2;                 % grid size 
 
 
+% 1D discretized Laplcien for the column dominant indexes
 Ly = sparse(interior,interior,-2,J,J); 
 Ly = Ly + sparse(interior,interior+1,1,J,J);
 Ly = Ly + sparse(interior,interior-1,1,J,J);
 
+% Building the row dominant indexes
 [index_x,index_y]=ind2sub([J1,J2],interior);
 interiorX=sub2ind([J2,J1],index_y,index_x);
 
+% 1D discretized Laplcien for the row dominant indexes
 Lx = sparse(interiorX,interiorX,-2,J,J);
 Lx = Lx + sparse(interiorX,interiorX+1,1,J,J);
 Lx = Lx + sparse(interiorX,interiorX-1,1,J,J);
@@ -101,7 +101,7 @@ F(1) = getframe(gcf,[0,0,pos(3:4)]);
 disp('press any key to continue');
 pause
 
-% Crank-Nicolson implicit scheme 
+% ADI's Crank-Nicolson implicit schemes 
 Ax=(speye(J)- dt/2/h^2*D*Lx);
 Ay=(speye(J)- dt/2/h^2*D*Ly);
 
@@ -134,22 +134,24 @@ end
 
 vi = 2;
 
-% BOUCLE PRINCIPALE
+% MAIN LOOP
 tic
 while t < tfinal
     
     % SB: on a remplace les resolutions du systeme lineaire Ax\b par 
     % une factorisation manuelle LU: uux\(llx\b)
     % et Ay\b par uuy\(lly\b)
-    b = ( u + dt/2/h^2*D*Ly*u ); %b a l'air ok, pas que des 0 et des nan
+    b = ( u + dt/2/h^2*D*Ly*u ); 
+    
     %Convert data in X dominant format
-    b=reshape(reshape(b,J1,J2)',J,1); %ï¿½a va aussi
-    u12=uux\(llx\b); %Ax\b donne une matrice de nan, pas inv()* (mais bien sï¿½r bcp plus lent)
-    Lxu12 = Lx*u12; %Tout est ï¿½ 0 !!!!!!!!!!! (ou nan)
+    b=reshape(reshape(b,J1,J2)',J,1); 
+    u12=uux\(llx\b); 
+    Lxu12 = Lx*u12; 
+    
     %Convert data in Y dominant format
     u12 = reshape(reshape(u12,J2,J1)',J,1);
     Lxu12 = reshape(reshape(Lxu12,J2,J1)',J,1);
-    newu = uuy\(lly\( u12 + dt/2/h^2*D*Lxu12)); %newu est beaucoup trop plein de nan
+    newu = uuy\(lly\( u12 + dt/2/h^2*D*Lxu12));
     
     % Neumann no flux
     for i = 1:length(border)
