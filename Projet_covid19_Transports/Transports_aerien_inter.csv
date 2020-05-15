@@ -1,0 +1,103 @@
+;;;IL FAUT DIVISER PAR 2 POUR AVOIR LE NOMBRE DE PERSONNES QUI PARTENT OU LE NOMBRE DE PERSONNES QUI ARRIVENT;;;;;;;
+;;;;;;;;;;
+;;;%Arrivée et départs;;Voyage :;France-CHINE (2sens);;France-Espagne (2sens);;France-Italie (2sens)
+;;;;;Pax tot :;2,80E+06;;1,53E+07;;1,25E+07
+;;%CDG;0,442;;CDG;1,24E+06;;6,76E+06;;5,53E+06
+;;%Orly;0,185;;Orly;5,18E+05;;2,83E+06;;2,31E+06
+;;%Nice;0,084;;Nice;2,35E+05;;1,29E+06;;1,05E+06
+;;%Lyon;0,068;;Lyon;1,90E+05;;1,04E+06;;8,50E+05
+janv-20;;%Marseille;0,059;;Marseille;1,65E+05;;9,03E+05;;7,38E+05
+;;%Mulhouse;0,053;;Mulhouse;1,48E+05;;8,11E+05;;6,63E+05
+;;%Bordeaux;0,045;;Bordeaux;1,26E+05;;6,89E+05;;5,63E+05
+;;%Nantes;0,042;;Nantes;1,18E+05;;6,43E+05;;5,25E+05
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;Voyage :;France-CHINE (2sens);;France-Espagne (2sens);;France-Italie (2sens)
+;;;;;Pax tot :;3,00E+05;;1,80E+06;;1,50E+06
+;;%CDG;0,453;;CDG;1,36E+05;;8,15E+05;;6,80E+05
+;;%Orly;0,196;;Orly;5,88E+04;;3,53E+05;;2,94E+05
+févr-20;;%Nice;0,07;;Nice;2,10E+04;;1,26E+05;;1,05E+05
+;;%Lyon;0,07;;Lyon;2,10E+04;;1,26E+05;;1,05E+05
+;;%Marseille;0,08;;Marseille;2,40E+04;;1,44E+05;;1,20E+05
+;;%Mulhouse;0,057;;Mulhouse;1,71E+04;;1,03E+05;;8,55E+04
+;;%Bordeaux;0,057;;Bordeaux;1,71E+04;;1,03E+05;;8,55E+04
+;;%Nantes;0,051;;Nantes;1,53E+04;;9,18E+04;;7,65E+04
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;Voyage :;France-CHINE (2sens);;France-Espagne (2sens);;France-Italie (2sens)
+;;;;;Pax tot :;3,00E+05;;2,30E+06;;1,60E+06
+;;%CDG;0,465;;CDG;1,40E+05;;1,07E+06;;7,44E+05
+;;%Orly;0,202;;Orly;6,06E+04;;4,65E+05;;3,23E+05
+mars-20;;%Nice;0,071;;Nice;2,13E+04;;1,63E+05;;1,14E+05
+;;%Lyon;0,071;;Lyon;2,13E+04;;1,63E+05;;1,14E+05
+;;%Marseille;0,06;;Marseille;1,80E+04;;1,38E+05;;9,60E+04
+;;%Mulhouse;0,046;;Mulhouse;1,38E+04;;1,06E+05;;7,36E+04
+;;%Bordeaux;0,057;;Bordeaux;1,71E+04;;1,31E+05;;9,12E+04
+;;%Nantes;0,057;;Nantes;1,71E+04;;1,31E+05;;9,12E+04
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;%Arrivée et départs;;Voyage :;France-CHINE (2sens);;France-Espagne (2sens);;France-Italie (2sens)
+;;;;;Pax tot :;9,03E+04;;5,28E+05;;4,03E+05
+;;%CDG;0,442;;CDG;3,99E+04;;2,33E+05;;1,78E+05
+;;%Orly;0,185;;Orly;1,67E+04;;9,76E+04;;7,46E+04
+;;%Nice;0,084;;Nice;7,59E+03;;4,43E+04;;3,39E+04
+;;%Lyon;0,068;;Lyon;6,14E+03;;3,59E+04;;2,74E+04
+Janvier 2020, par jour;;%Marseille;0,059;;Marseille;5,33E+03;;3,11E+04;;2,38E+04
+;;%Mulhouse;0,053;;Mulhouse;4,79E+03;;2,80E+04;;2,14E+04
+;;%Bordeaux;0,045;;Bordeaux;4,06E+03;;2,37E+04;;1,81E+04
+;;%Nantes;0,042;;Nantes;3,79E+03;;2,22E+04;;1,69E+04
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;Voyage :;France-CHINE (2sens);;France-Espagne (2sens);;France-Italie (2sens)
+;;;;;Pax tot :;9,68E+03;;6,21E+04;;4,84E+04
+;;%CDG;0,453;;CDG;4,38E+03;;2,81E+04;;2,19E+04
+;;%Orly;0,196;;Orly;1,90E+03;;1,22E+04;;9,48E+03
+Février 2020, par jour;;%Nice;0,07;;Nice;6,77E+02;;4,34E+03;;3,39E+03
+;;%Lyon;0,07;;Lyon;6,77E+02;;4,34E+03;;3,39E+03
+;;%Marseille;0,08;;Marseille;7,74E+02;;4,97E+03;;3,87E+03
+;;%Mulhouse;0,057;;Mulhouse;5,52E+02;;3,54E+03;;2,76E+03
+;;%Bordeaux;0,057;;Bordeaux;5,52E+02;;3,54E+03;;2,76E+03
+;;%Nantes;0,051;;Nantes;4,94E+02;;3,17E+03;;2,47E+03
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;Voyage :;France-CHINE (2sens);;France-Espagne (2sens);;France-Italie (2sens)
+;;;;;Pax tot :;9,68E+03;;7,93E+04;;5,16E+04
+;;%CDG;0,465;;CDG;4,50E+03;;3,69E+04;;2,40E+04
+;;%Orly;0,202;;Orly;1,95E+03;;1,60E+04;;1,04E+04
+Mars 2020, par jour;;%Nice;0,071;;Nice;6,87E+02;;5,63E+03;;3,66E+03
+;;%Lyon;0,071;;Lyon;6,87E+02;;5,63E+03;;3,66E+03
+;;%Marseille;0,06;;Marseille;5,81E+02;;4,76E+03;;3,10E+03
+;;%Mulhouse;0,046;;Mulhouse;4,45E+02;;3,65E+03;;2,37E+03
+;;%Bordeaux;0,057;;Bordeaux;5,52E+02;;4,52E+03;;2,94E+03
+;;%Nantes;0,057;;Nantes;5,52E+02;;4,52E+03;;2,94E+03
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+;;Nb infectés;Pop totale;;;%pop infectée;;;;
+Italie ;Fevrier;2761;6,10E+07;;;4,53E-05;;;;
+;Mars;109088;6,10E+07;;;1,79E-03;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+Espagne;Fevrier;82;4,70E+07;;;1,74E-06;;;;
+;Mars;91088;4,70E+07;;;1,94E-03;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+Chine;Janvier;11601;1,39E+09;;;8,33E-06;;;;
+;Février;32652;1,39E+09;;;2,34E-05;;;;
+;Mars;4000;1,39E+09;;;2,87E-06;;;;

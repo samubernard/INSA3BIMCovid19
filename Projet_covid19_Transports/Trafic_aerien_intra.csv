@@ -1,0 +1,13 @@
+;;Nombre de voyageurs transitant par l'aéroport par jour;;;;
+;;Temps normal;Début mars (1 ~ 15);Fin mars (16 ~ 31);Avril - Mai;Post-déconfinement
+;Nantes;2683,4757;2169,067;1123,002;268,34757;805,04271
+;Bordeaux;3468,8323;2764,637;1446,59;103,8222;1040,64969
+;Marseille;3265,5346;2574,969;1358,235;97,48101;979,66038
+;Nice;5568,976;4368,393;2313,345;166,0295;1670,6928
+;Lyon;3273,8754;2670,552;1369,776;98,30925;982,16262
+;Toulouse;5663,5852;4468,222;2352,519;168,8411;1699,07556
+;Paris;14121,74;10924,59;5846,404;419,5984;4236,522
+;EuroAirport;495,1321;406,0083;207,9555;14,92503;148,53963
+;;;;;;
+;;;;;;
+;Sans reconfinement: reprise des activités normales estimées à juillet 2020;;;;;
