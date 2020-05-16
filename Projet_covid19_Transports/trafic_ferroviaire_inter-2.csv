@@ -1,0 +1,13 @@
+,Voies,France(Calais)-Angleterre,France(Paris) – Belgique,France(Paris) – Allemagne
+,Coordonnees gare France,,,
+,Nombre passagers transporté quotidiennement (en sens unique),15000,5000,5000
+,Nombre infectés par date (qui arrivent en France),,,
+,janvier,0,0,0
+,février,0,0,0
+,05/03/20,"0,032547169811321","0,022727272727273","0,021084337349398"
+,10/03/20,"0,108679245283019","0,122727272727273","0,092771084337349"
+,15/03/20,"0,393679245283019","0,409090909090909","0,349397590361446"
+,16/03/20,"0,438679245283019","0,481818181818182","0,433734939759036"
+,,,,
+,,,,
+,Attention : il y a aussi des passagers qui partent de France mais je n’ai pas indiqué le nombre d’infectés car il dépendra à priori de la simulation,,,

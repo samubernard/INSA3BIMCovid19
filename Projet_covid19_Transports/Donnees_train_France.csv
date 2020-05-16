@@ -1,0 +1,26 @@
+﻿;;;
+;Nombre de voyageurs par jour en moyenne (temps normal);Nombre de voyageurs par jour en moyenne (début déconfinement);
+Paris;1 611 310,1;580 071,6;
+Lille;53 565,5;19 283,6;
+Metz;19 360,6;6 969,8;
+Strasbourg;55 412,5;19 948,5;
+Nancy;20 773,6;7 478,5;
+Dijon;16 250,1;5 850,1;
+Rouen;15 914,9;5 729,4;
+Rennes;28 544,2;10 275,9;
+Nantes;32 359,0;11 649,2;
+Bordeaux;44 057,5;15 860,7;
+Toulouse;23 869,1;8 592,9;
+Montpellier;20 641,0;7 430,8;
+Marseille;38 597,6;13 895,1;
+Nice;32 736,2;11 785,0;
+Grenoble;21 030,2;7 570,9;
+Lyon;119 188,5;42 907,9;
+Clermont-Ferrand;10 234,1;3 684,3;
+Calais;4 435,3;1 596,7;(nécessité de Calais sur la carte pour les voyages en train inter-pays)
+;;;
+;;;
+données : https://ressources.data.sncf.com/explore/dataset/frequentation-gares/table/?sort=nom_gare&dataChart=eyJxdWVyaWVzIjpbeyJjaGFydHMiOlt7InR5cGUiOiJ0cmVlbWFwIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoidG90YWxfdm95YWdldXJzX25vbl92b3lhZ2V1cnNfMjAxOCIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6InJhbmdlLWN1c3RvbSJ9XSwieEF4aXMiOiJ0b3RhbF92b3lhZ2V1cnNfMjAxOCIsIm1heHBvaW50cyI6NTAsInNvcnQiOiJzZXJpZTEtMSIsInNlcmllc0JyZWFrZG93biI6IiIsInNlcmllc0JyZWFrZG93blRpbWVzY2FsZSI6IiIsImNvbmZpZyI6eyJkYXRhc2V0IjoiZnJlcXVlbnRhdGlvbi1nYXJlcyIsIm9wdGlvbnMiOnsic29ydCI6Im5vbV9nYXJlIn19fV0sInRpbWVzY2FsZSI6IiIsImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWV9 ;;;
+;;;
+Données du début de déconfinement sous la base de 36% du traffic normal (moyenne de 55% des TER, 37% des TGV et Intercités et 16% des OuiGo en temps normal);;;
+source : https://aide.assistant.sncf/hc/fr/articles/360012607719-Information-sur-le-trafic-en-France-lutte-contre-la-propagation-du-COVID-19-;;;
