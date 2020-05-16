@@ -2,18 +2,19 @@ function sol = model_SIR()
 % MODEL_SIR simulation of the SIR model with n classes
 
 % Dynamical parameters
-%N = [2.0e8 ; 3.0e8 ; 1.0e8];
-%N = [1.3e8 ; 4.5e8 ; 0.9e8];% population
-N = popAge([15,70])*1e4;
+n = 3;
+N = popAge([16 70]);    % population
 %mu = 3.4e-5;    % natural death rate 1/80 years = 1/80/365 per day 
 %Lambda = N*mu;  % birth rate: set to keep N constant (ignoring deaths from covid-19)
-gam = [1/14.0 ; 1/15.0 ; 1/10.0];  % recovery rate 1/two weeks = 1/14 
-beta = [0.17 0.3 0.1 ;
-        0.50 0.2 0.21 ;
-        0.40 0.12 0.23 ];   % infection rate S -> I
+gam = [1/7.0 ; 1/10.0 ; 1/14.0];  % recovery rate 1/two weeks = 1/14 
+R0 = 2.5;
+
+beta = eye(n).*R0.*gam;
+beta([2 3 4 6 7 8]) = [0.3 0.1 0.3 0.2 0.1 0.2];
+
 
 % Integration parameters 
-IC = [(N(1)-0.25e4) 0.25e4 0 ; (N(2)-0.33e4) 0.33e4 0 ; (N(3)-0.42e4) 0.42e4 0 ]; % seed a few infected individuals
+IC = [(N(1)-0.25e3) 0.25e3 0 ; (N(2)-0.33e3) 0.33e3 0 ; (N(3)-0.42e3) 0.42e3 0 ]; % seed a few infected individuals
 tspan = [0 365]; % in days 
 
 % simulations
