@@ -73,25 +73,8 @@ Y(exterior) = nan;
 basal_populations_density = 60; % Default population density in France 
 basal_infection_density = 0.0;
 
-% Grandes villes
-% columns: X pos; Y pos; Radius; population density, infected densities
-cities = [
-550, 250, 30.09, 3676.9, 0.1;  % Paris @ 3676.9 hab/km^2
-753, 615, 30.09, 1317, 0.001;    % Lyon @ 1317 hab/km^2 
-815, 850, 23.47, 900.6,  0.0;   % Marseille @ 900.6 hab/km^2 
-472, 855, 16.07, 1083.9, 0.0;  % Toulouse @ 1083.9 hab/km^2
-320, 659, 19.32, 719.2, 0.01;   % Bordeaux @ 719.2 hab/km^2
-600, 50 , 11.87, 2301.3, 0.0;  % Lille @ 2301.3 hab/km^2
-925, 815, 15.38, 1266.5, 0.0;  % Nice @ 1266.5 hab/km^2
-220, 425, 13.08, 1100,   0.0;    % Nantes @ 1100 hab/km^2
-945, 266, 8.74 , 1873.5, 2.0;  % Strasbourg @ 1873.5 hab/km^2
-240, 330, 9.52 , 1092.4, 0.1;  % Rennes @ 1092.4 hab/km^2
-831, 663, 12.77, 970,    0.0];    % Grenoble @ 970 hab/km^2
-
-%Vide
-empty = [
-652,  433, 80, 1.0, 0.0;  % Entre Lyon et Paris @ 1 hab/km^2
-580,  700, 80, 1.0, 0.0]; % Massif Central @ 1 hab/km^2
+load ../datasets/cities.mat
+load ../datasets/trains.mat
 
 % dynamical variables, initial values
 sys_size = 9;
@@ -113,14 +96,6 @@ for i=1:size(cities,1)
   u( (X(:) - cities(i,1)).^2 + (Y(:) - cities(i,2)).^2 < cities(i,3)^2, 5 ) = cities(i,5) * nclass(2); 
   u( (X(:) - cities(i,1)).^2 + (Y(:) - cities(i,2)).^2 < cities(i,3)^2, 6 ) = cities(i,5) * nclass(3); 
 end
-for i=1:size(empty,1)
-  u( (X(:) - empty(i,1)).^2 + (Y(:) - empty(i,2)).^2 < empty(i,3)^2, 1 ) = empty(i,4) * nclass(1); 
-  u( (X(:) - empty(i,1)).^2 + (Y(:) - empty(i,2)).^2 < empty(i,3)^2, 2 ) = empty(i,4) * nclass(2); 
-  u( (X(:) - empty(i,1)).^2 + (Y(:) - empty(i,2)).^2 < empty(i,3)^2, 3 ) = empty(i,4) * nclass(3); 
-  u( (X(:) - empty(i,1)).^2 + (Y(:) - empty(i,2)).^2 < empty(i,3)^2, 4 ) = empty(i,5) * nclass(1); 
-  u( (X(:) - empty(i,1)).^2 + (Y(:) - empty(i,2)).^2 < empty(i,3)^2, 5 ) = empty(i,5) * nclass(2); 
-  u( (X(:) - empty(i,1)).^2 + (Y(:) - empty(i,2)).^2 < empty(i,3)^2, 6 ) = empty(i,5) * nclass(3); 
-end
 
 u(exterior,:) = nan;
 
@@ -129,7 +104,7 @@ D = diag([DS; DS; DS; DI; DI; DI; DR; DR; DR]);
 
 %% time parameters
 t0     = 0;
-tfinal = 90; 
+tfinal = 365; 
 t      = t0;
 dt     = 1;
 
@@ -159,7 +134,11 @@ u_out(u_out < 0.01) = nan; % don't display density if < 0.01
 u_out(1,1) = 1000;
 image([y(1), y(end)],[x(1), x(end)], country);
 hold on
-contourf(X,Y,log10(u_out),[-2,-1,0,1,2,3],'LineW',0.5);
+contourf(X,Y,log10(u_out),[-2,-1,0,1,1.5,2,3],'LineW',0.5);
+plot(X(gares),Y(gares),'ob','LineW',2,'MarkerFaceC','white')
+% text(X(gares)+10,Y(gares)+10,station_names, ...
+%     'Color',[0.3, 0.3, 0.3]);
+text(cities(:,1),cities(:,2),city_names,'Color',[0.3, 0.3, 0.3]); 
 axis([y(1), y(end), x(1), x(end), 0, ymax])
 shading interp
 axis ij
@@ -281,12 +260,16 @@ while t < tfinal
     subplot(3,6,[1,2,3,7,8,9,13,14,15]);
     hold off
     u_out = reshape(sum(u(:,4:6),2),J1,J2);
-    u_out(u_out < 0.01) = nan;
+    u_out(u_out < 0.005) = nan;
     u_out(1,1) = 1000;
     image([y(1), y(end)],[x(1), x(end)], country);
     hold on
     axis([y(1), y(end), x(1), x(end), 0, ymax])
-    contourf(X,Y,log10(u_out),[-2,-1,0,1,2,3],'LineW',0.5);
+    contourf(X,Y,log10(u_out),[-2,-1,0,1,1.5,2,3],'LineW',0.5);
+    plot(X(gares),Y(gares),'ob','LineW',2,'MarkerFaceC','white')
+%     text(X(gares)+10,Y(gares)+10,station_names, ...
+%     'Color',[0.3, 0.3, 0.3]);
+    text(cities(:,1),cities(:,2),city_names,'Color',[0.3, 0.3, 0.3]); 
     colorbar
     shading interp
     axis ij

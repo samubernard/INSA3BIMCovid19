@@ -148,6 +148,91 @@ imagesc(G)
 
 save grid.mat border interior J1 J2
 
+%% Train stations
+    
+load ../Projet_covid19_Transports/gares.mat
+
+A = imread('France_population_density.png');
+[ay,ax,~] = size(A);
+
+J1 = 201; % 101 along vertical axis
+J2 = round(ax/ay*J1); % keep x:y ratio 
+NG = J2*J1; % nbr of points in the grid
+
+xs = x/ax*J2;
+ys = y/ay*J1;
+
+axis ij;
+axis equal;
+
+gares = round(ys) + J1*(round(xs)-1); 
+
+% Check that the border is completly closed:
+G = sparse(J1,J2);
+G(gares) = 1;
+G(border) = 1;
+spy(G);
+
+station_names = {
+'Paris',
+'Lille',
+'Metz',
+'Strasbourg',
+'Nancy',
+'Dijon',
+'Rouen',
+'Rennes',
+'Nantes',
+'Bordeaux',
+'Toulouse',
+'Montpellier',
+'Marseille',
+'Nice',
+'Grenoble',
+'Lyon',
+'Clermont-Ferrand',
+'Calais'
+};
+
+save trains.mat gares station_names
+
+%% Cities/country side
+
+% Grandes villes
+% columns: X pos; Y pos; Radius; population density, infected densities
+cities = [
+550, 250, 30.09, 3676.9, 0.1;  % Paris @ 3676.9 hab/km^2
+753, 615, 30.09, 1317, 0.001;    % Lyon @ 1317 hab/km^2 
+815, 850, 23.47, 900.6,  0.0;   % Marseille @ 900.6 hab/km^2 
+472, 855, 16.07, 1083.9, 0.0;  % Toulouse @ 1083.9 hab/km^2
+320, 705, 19.32, 719.2, 0.01;   % Bordeaux @ 719.2 hab/km^2
+600, 50 , 11.87, 2301.3, 0.0;  % Lille @ 2301.3 hab/km^2
+925, 815, 15.38, 1266.5, 0.0;  % Nice @ 1266.5 hab/km^2
+220, 425, 13.08, 1100,   0.0;    % Nantes @ 1100 hab/km^2
+945, 266, 8.74 , 1873.5, 2.0;  % Strasbourg @ 1873.5 hab/km^2
+240, 330, 9.52 , 1092.4, 0.1;  % Rennes @ 1092.4 ha/km^2
+831, 663, 12.77, 970,    0.0;    % Grenoble @ 970 hab/km^2
+652,  433, 80, 1.0,      0.0;  % Entre Lyon et Paris @ 1 hab/km^2
+580,  700, 80, 1.0,      0.0]; % Massif Central @ 1 hab/km^2
+
+city_names = {
+'Paris',
+'Lyon', 
+'Marseille',
+'Toulouse',
+'Bordeaux',
+'Lille',
+'Nice',
+'Nantes', 
+'Strasbourg', 
+'Rennes',
+'Grenoble', 
+'Entre Lyon et Paris', 
+'Massif Central'
+};
+
+save cities.mat cities city_names
+
 %% Resise the map to J1 x J2
 
 % French map
