@@ -156,9 +156,10 @@ pos = get(gcf,'Position');
 subplot(3,6,[1,2,3,7,8,9,13,14,15]);
 u_out = reshape(sum(u(:,4:6),2),J1,J2);
 u_out(u_out < 0.01) = nan; % don't display density if < 0.01
+u_out(1,1) = 1000;
 image([y(1), y(end)],[x(1), x(end)], country);
 hold on
-contourf(X,Y,u_out,[0.01,1.0,10,100,1000],'LineW',2);
+contourf(X,Y,log10(u_out),[-2,-1,0,1,2,3],'LineW',0.5);
 axis([y(1), y(end), x(1), x(end), 0, ymax])
 shading interp
 axis ij
@@ -281,10 +282,12 @@ while t < tfinal
     hold off
     u_out = reshape(sum(u(:,4:6),2),J1,J2);
     u_out(u_out < 0.01) = nan;
+    u_out(1,1) = 1000;
     image([y(1), y(end)],[x(1), x(end)], country);
     hold on
     axis([y(1), y(end), x(1), x(end), 0, ymax])
-    contourf(X,Y,u_out,[0.01,1.0,10,100,1000],'LineW',2);
+    contourf(X,Y,log10(u_out),[-2,-1,0,1,2,3],'LineW',0.5);
+    colorbar
     shading interp
     axis ij
     axis off

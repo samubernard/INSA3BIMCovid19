@@ -18,7 +18,7 @@ load border.mat
 A = imread('France_population_density.png');
 [ay,ax,~] = size(A);
 
-J1 = 101; % 101 along vertical axis
+J1 = 201; % 101 along vertical axis
 J2 = round(ax/ay*J1); % keep x:y ratio 
 NG = J2*J1; % nbr of points in the grid
 
@@ -57,7 +57,7 @@ spy(G);
 
 %% Define the interior: more tricky    
 % we will use an iterative method, starting with a seed in the interior
-i0 = 50; j0 = 60; % a point in the interior
+i0 = 100; j0 = 120; % a point in the interior
 interior = i0 + J1*j0;
 downright = 1:(J2*J1);
 upleft = (J2*J1):-1:1;
@@ -69,6 +69,7 @@ for n = 1:2 % nbr of iterations depends on the shape of the border
   % and is not a border
   % check all 4 neighbours
 
+  n
   for k = downright
     % check if k has a neighbor in th interior
     if any(interior == (k+1)) && ~any(border == k) % k is above an interior point
