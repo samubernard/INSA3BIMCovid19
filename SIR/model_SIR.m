@@ -5,17 +5,16 @@ function sol = model_SIR()
 
 % Dynamical parameters
 N = popAge([18 40 70]);    % population
-%gam = [1/17.0 ; 1/23.0 ; 1/35.0 ; 1/30.0]; 
-gam = ones(4,1)*1/10.0; % recovery rate 1/10days
+gam = [1/4.0 ; 1/8.0 ; 1/10.0 ; 1/14.0]; 
 
 %R0 = 2.3;       %Avant confinement
 %R0 = 0.5;       %Pendant confinement
 %R0 = 0.9;       %Apres confinement
 
-
-Ci = [1 2 1.5 0 ; 2 4 3 1 ; 1.5 3 2.5 1 ; 0 1 1 0.5];        %contact possible avant confinement
-Cc = [0. 1.5 1 0 ; 1.5 2 1 0 ; 1 1 1 0.5 ; 0 0 0.5 0.5];        %contact possible pendant confinement
+Ci = [5.43 1.98 2.14 0.24 ; 1.57 5.17 3.79 0.54 ; 1.27 2.83 5.26 0.92 ; 0.43 1.23 2.81 1.76];        %contact possible avant confinement
+Cc = [0.53 0.29 0.29 0.02 ; 0.23 1.04 1.04 0.16 ; 0.17 0.77 1.13 0.19 ; 0.05 0.37 0.60 0.16];        %contact possible pendant confinement
 Cpc = [0. 1.5 1 0 ; 1.5 3 1.5 0 ; 1 1.5 2 0.5 ; 0 0 0.5 0.5];        %contact possible apres confinement
+
 
 tc = 20; %debut du confinement
 tpc = 80; %fin du confinement
