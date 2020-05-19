@@ -1,7 +1,7 @@
 %% COVID-19 epidemiological reaction-diffusion-jump model
 % Reaction: structured SIR model
 % Diffusion: Metropolitan France, 100km^2 resolution
-% Jump: airports/train stations/highway trafic
+% Jump: connection between train stations (TODO: airports/highway trafic)
 % 
 % Numerical schemes
 % Reaction: Forward Euler 
@@ -9,7 +9,7 @@
 % alternating direction implicit method (ADI)
 % Domain of integration: Metropolitan France (datasets/grid.mat)
 %                        Neumann no flux boundary conditions 
-% Transport: jumps from and to transport hubs (train stations, airport and
+% Transport: jumps from and to transport hubs (train stations, TODO: airport and
 % city centers) 
 %
 % Contribution:
@@ -35,10 +35,14 @@ DR = 0;
 %% SIR model parameters
 gam = [1/14.0 ; 1/15.0 ; 1/10.0];  % recovery rate 1/two weeks = 1/14 
 Gam = diag(gam);
-beta = [0.17 0.3 0.1 ;
-        0.50 0.2 0.21 ;
-        0.40 0.12 0.23 ];   % infection rate S -> I
+% beta = [0.17 0.3 0.1 ;
+%         0.50 0.2 0.21 ;
+%         0.40 0.12 0.23 ];   % infection rate S -> I
+beta = zeros(3);
 
+%% Tranport parameters
+transport_ban = 1;
+station_radius = 20;
 
 %% Spatial discretization
 load ../datasets/grid.mat
@@ -73,8 +77,9 @@ Y(exterior) = nan;
 basal_populations_density = 60; % Default population density in France 
 basal_infection_density = 0.0;
 
-load ../datasets/cities.mat
-load ../datasets/trains.mat
+load ../datasets/cities.mat % location/density cities
+load ../datasets/trains.mat % location train stations
+load ../Projet_covid19_Transports/Donnees_train_France.mat % train traffic 
 
 % dynamical variables, initial values
 sys_size = 9;
@@ -109,16 +114,7 @@ t      = t0;
 dt     = 1;
 
 %% Display 
-% camera zoom and orbit
 nbr_t = ceil((tfinal-t0)/dt)+2; 
-% dtheta = linspace(-37.5,37.5,floor(nbr_t/2));
-% dphi = linspace(-10,60,floor(nbr_t/2));
-% zo = linspace(5,1,floor(nbr_t/2));
-% dy = linspace(-3,0,floor(nbr_t/2));
-% dtheta = fliplr([dtheta, repmat(37.5,1,nbr_t - floor(nbr_t/2))]);
-% dphi = fliplr([dphi, repmat(60,1,nbr_t - floor(nbr_t/2))]);
-% zo = fliplr([zo, ones(1,nbr_t - floor(nbr_t/2))]);
-% dy = fliplr([dy, zeros(1,nbr_t - floor(nbr_t/2))]);
 
 % movie struct
 clearvars F;
@@ -142,9 +138,6 @@ text(cities(:,1),cities(:,2),city_names,'Color',[0.3, 0.3, 0.3]);
 axis([y(1), y(end), x(1), x(end), 0, ymax])
 shading interp
 axis ij
-% camorbit(dtheta(1),dphi(1))
-% camzoom(zo(1))
-% camdolly(0,dy(1),0)
 axis off
 view(2);
 axis equal;
@@ -254,6 +247,26 @@ while t < tfinal
     end
     
     u = newu;
+    
+    % Transport 
+    for i=1:length(gares)
+      % find the fraction of infected locally (radius 10km)
+      station = find(((X(:) - X(gares(i))).^2 + (Y(:) - Y(gares(i))).^2) < station_radius^2);
+      station = intersect(station,interior);
+      ntot = h^2 * sum(u(station, 1:9 ),1);  
+      % Dispatch a number of infected to each other station proportional to the product of traffic
+      other_stations = setdiff(1:length(gares),i);
+      to_dispatch = ntot(4:6)./([sum(ntot(1:3:9)), sum(ntot(2:3:9)), sum(ntot(3:3:9))]) * ...
+        train_traf(i,1+transport_ban)/2 .* ...
+        train_traf(other_stations,1+transport_ban)/sum(train_traf(:,1));
+      u( gares(other_stations), 4:6 ) = u( gares(other_stations), 4:6 ) + dt * to_dispatch/h^2;
+      fract_left = (h^2*sum(u(station,4:6),1) - dt * sum( to_dispatch, 1 ))./ ...
+          sum(u(station,4:6),1)/h^2;
+      u( station, 4:6 ) = u( station, 4:6 ) .* fract_left;      
+    end
+
+
+
     t = t + dt;
     fprintf("t = %.5f, Infected=%f\n",t,sum(sum(u(interior,4:6),2))*h^2);
     
@@ -274,9 +287,6 @@ while t < tfinal
     shading interp
     axis ij
     axis off
-%     camorbit(dtheta(vi),dphi(vi))
-%     camzoom(zo(vi));
-%     camdolly(0,dy(vi),0);
     view(2);
     axis equal;
     title(['day ' num2str(t)]);
@@ -298,7 +308,7 @@ toc
 %% Export simulation as video
 
 F = F(1:vi-1);
-v = VideoWriter('epidemics_notransport','MPEG-4');
+v = VideoWriter('epidemics_transport_nocommunity_transmission','MPEG-4');
 v.Quality = 25;
 open(v);
 writeVideo(v,F);
