@@ -35,10 +35,10 @@ DR = 0;
 %% SIR model parameters
 gam = [1/14.0 ; 1/15.0 ; 1/10.0];  % recovery rate 1/two weeks = 1/14 
 Gam = diag(gam);
-beta = [0.17 0.3 0.1 ;
-        0.50 0.2 0.21 ;
-        0.40 0.12 0.23 ];   % infection rate S -> I
-% beta = zeros(3);
+% beta = [0.17 0.3 0.1 ;
+%         0.50 0.2 0.21 ;
+%         0.40 0.12 0.23 ];   % infection rate S -> I
+beta = zeros(3);
 
 %% Tranport parameters
 transport_ban = 1;
@@ -261,7 +261,7 @@ while t < tfinal
         train_traf(other_stations,1+transport_ban)/sum(train_traf(:,1));
       u( gares(other_stations), 4:6 ) = u( gares(other_stations), 4:6 ) + dt * to_dispatch/h^2;
       fract_left = (h^2*sum(u(station,4:6),1) - dt * sum( to_dispatch, 1 ))./ ...
-          sum(u(station,4:6),1)/h^2
+          sum(u(station,4:6),1)/h^2;
       u( station, 4:6 ) = u( station, 4:6 ) .* fract_left;      
     end
 
@@ -308,7 +308,7 @@ toc
 %% Export simulation as video
 
 F = F(1:vi-1);
-v = VideoWriter('epidemics_transport_ban','MPEG-4');
+v = VideoWriter('epidemics_transport_nocommunity_transmission','MPEG-4');
 v.Quality = 25;
 open(v);
 writeVideo(v,F);
